@@ -1,0 +1,8 @@
+.env
+db.sqlite3
+*.pyc
+*.pyo
+__pycache__/
+# Coverage directory from code coverage tools
+.coverage
+.coverage.*

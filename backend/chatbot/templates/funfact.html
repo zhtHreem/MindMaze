@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+        body {
+            background: #1a1a1a;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .generate-btn {
+            background: #5B5FEF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .generate-btn:hover {
+            background: #4A4FE4;
+        }
+
+        .content-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .main-fact {
+            width: 100%;
+        }
+
+        .secondary-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .fact-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .fact-content {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .intro-message {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 48px;
+        }
+
+        /* Make the main fact section slightly more prominent */
+        .main-fact .fact-section {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .main-fact .section-header {
+            font-size: 1.1rem;
+        }
+
+        .main-fact .fact-content {
+            font-size: 1.05rem;
+        }
+        .fact-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-top: 16px;
+    }
+    
+    .image-container {
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 16px;
+    }
+    
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">
+                <span>🐘</span>
+                <span>🔊</span>
+                Random Fun Fact Time!
+            </h1>
+            <form method="POST" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="generate-btn">
+                    <span>✨</span>
+                    GENERATE NEW FACT
+                </button>
+            </form>
+        </div>
+
+        {% if fact_data %}
+        <div class="content-layout">
+            <div class="main-fact">
+                <div class="fact-section">
+                    <div class="section-header">
+                        <span>✨</span>
+                        DID YOU KNOW?
+                    </div>
+                    <div class="fact-content">
+                        {{ fact_data.fun_fact }}
+                    </div>
+                    <!-- <div class="image-container">
+                        {% if fact_data.image_url %}
+                        <img src="{{ fact_data.image_url }}" alt="Illustration of the fun fact" class="fact-image">
+                        {% else %}
+                        <div class="loading-overlay">
+                            <p>Generating image...</p>
+                        </div> -->
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="secondary-content">
+                <div class="fact-section">
+                    <div class="section-header">
+                        <!-- <span>🤔</span>
+                        WHY IS THIS TRUE? -->
+                        <span>📚</span>
+                        THE STORY BEHIND IT:
+                    </div>
+                    <div class="fact-content">
+                        {{ fact_data.explanation }}
+                    </div>
+                </div>
+
+                <div class="fact-section">
+                    <div class="section-header">
+                        <span>🤔</span>
+                        HOW DO WE KNOW THIS?:
+                    </div>
+                    <div class="fact-content">
+                        {{ fact_data.origin }}
+                    </div>
+                </div>
+
+                <div class="fact-section">
+                    <div class="section-header">
+                        <span>🦁</span>
+                        CATEGORY
+                    </div>
+                    <div class="fact-content">
+                        {{ fact_data.category }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="fact-section">
+            <div class="intro-message">
+                ✨ Click the generate button to discover an amazing fun fact! ✨
+            </div>
+        </div>
+        {% endif %}
+
+        {% if error_message %}
+        <div class="error-message">
+            {{ error_message }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
