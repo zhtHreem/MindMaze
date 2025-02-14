@@ -11,3 +11,37 @@ frontend/node_modules
 .env
 backend/.env
 frontend/.env
+# Ignore the backend Django-specific files
+/backend/db.sqlite3        # If you're using SQLite for the Django database
+/backend/*.log              # Log files
+/backend/.env               # If you're using environment variables
+/backend/local_settings.py  # Local settings if applicable
+
+# Ignore Django migrations
+/backend/**/migrations/
+
+# Ignore media and static files
+/backend/media/
+backend/static/
+
+# Virtual environment
+/venv/
+env/
+.venv/
+/backend/venv/
+
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# IDE files
+.vscode/
+.idea/
+
+# Coverage directory from code coverage tools
+.coverage
+.coverage.*
+
+# Django specific: avoid versioning the secret key
+/backend/secret_key.txt
