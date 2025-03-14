@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RiddlePage from './Components/riddle';
 import './index.css';
 import App from './App';
+import FunFactGenerator from './Components/funfact';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/riddle',
     element: <RiddlePage />,
+  },
+   {
+    path: '/funfact',
+    element: <FunFactGenerator />,
   },
   
   

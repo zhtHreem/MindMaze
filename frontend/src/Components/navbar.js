@@ -45,7 +45,7 @@ const SideNavBar = () => {
 
       <IconButton
         sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/funfact')}
       >
         <EmojiObjectsIcon />
       </IconButton>
